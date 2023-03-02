@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CalloryCounter/CalloryCounter.iml" filepath="$PROJECT_DIR$/CalloryCounter/CalloryCounter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/practicum/callory/CalloryCounter/CalloryCounter.iml" filepath="$PROJECT_DIR$/src/practicum/callory/CalloryCounter/CalloryCounter.iml" />
       <module fileurl="file://$PROJECT_DIR$/PraktikumHomeWork.iml" filepath="$PROJECT_DIR$/PraktikumHomeWork.iml" />
     </modules>
   </component>
