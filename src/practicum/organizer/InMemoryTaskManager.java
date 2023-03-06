@@ -3,11 +3,11 @@ package practicum.organizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class InMemoryTaskManager  implements Manager {
+public class InMemoryTaskManager  implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap <Integer, Epic> epics = new HashMap<>();
     private HashMap <Integer, SubTask> subTasks = new HashMap<>();
-    private ArrayList<Task> taskViewHistory = new ArrayList<>();
+    private HistoryManager historyManager = Managers.getDefaultHistory();
 
     private int id = 0;
 
@@ -61,15 +61,15 @@ public class InMemoryTaskManager  implements Manager {
     public Task getTaskFromId (int id) {
         if (tasks.containsKey(id)) {
             Task task = tasks.get(id);
-            updateHistory(task);
+            historyManager.addTask(task);
             return task;
         } else if (epics.containsKey(id)) {
             Epic epic = epics.get(id);
-            updateHistory(epic);
+            historyManager.addTask(epic);
             return epic;
         } else if (subTasks.containsKey(id)) {
             SubTask subTask = subTasks.get(id);
-            updateHistory(subTask);
+            historyManager.addTask(subTask);
             return subTask;
         } else {
             System.out.println("задачи с таким Id не существует");
@@ -150,13 +150,6 @@ public class InMemoryTaskManager  implements Manager {
 
     @Override
     public ArrayList<Task> history() {
-        return taskViewHistory;
-    }
-
-    private void updateHistory (Task task) {
-        if (taskViewHistory.size() >= 10) {
-            taskViewHistory.remove(0);
-        }
-        taskViewHistory.add(task);
+        return historyManager.getHistory();
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Manager manager = Managers.getDefault();
+        TaskManager manager = Managers.getDefault();
 
         ArrayList<String> description1 = new ArrayList<>();
         description1.add("Разморозить курицу");

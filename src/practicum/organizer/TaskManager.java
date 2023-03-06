@@ -3,7 +3,7 @@ package practicum.organizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public interface Manager {
+public interface TaskManager {
 
 
 
@@ -32,8 +32,7 @@ public interface Manager {
     // получение списка всех подзадач для определенного Эпика
     ArrayList<SubTask> getSubTasksFromEpicId (int id);
 
-    // История просмотра - последние 10 задач просмотренные пользователем
-
+    // получить историю просмотра задач
     ArrayList<Task> history();
 
 }
