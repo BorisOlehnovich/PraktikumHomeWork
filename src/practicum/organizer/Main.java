@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Manager manager = new Manager();
+        Manager manager = Managers.getDefault();
 
         ArrayList<String> description1 = new ArrayList<>();
         description1.add("Разморозить курицу");
@@ -72,11 +72,27 @@ public class Main {
 
         //manager.deleteTaskFromId(3);
 
+        manager.getTaskFromId(1);
+        manager.getTaskFromId(3);
+        manager.getTaskFromId(5);
+        manager.getTaskFromId(1);
+        manager.getTaskFromId(3);
+        manager.getTaskFromId(5);
+        manager.getTaskFromId(1);
+        manager.getTaskFromId(3);
+        manager.getTaskFromId(5);
+        manager.getTaskFromId(1);
+        manager.getTaskFromId(3);
+        manager.getTaskFromId(5);
+
         System.out.println("Список важных дел:");
-        ArrayList<Task> tasks = manager.getAllTasks();
+        ArrayList<Task> tasks = manager.history();
         for (Task task: tasks) {
             System.out.println(task.toString());
         }
+
+
+
 
     }
 }
