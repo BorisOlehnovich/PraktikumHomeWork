@@ -1,7 +1,7 @@
 package practicum.organizer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public interface TaskManager {
 
@@ -33,6 +33,6 @@ public interface TaskManager {
     ArrayList<SubTask> getSubTasksFromEpicId (int id);
 
     // получить историю просмотра задач
-    ArrayList<Task> history();
+    List<Task> history();
 
 }

@@ -1,8 +1,11 @@
 package practicum.organizer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface HistoryManager {
     void addTask (Task task);
-    ArrayList<Task> getHistory();
+    void remove(int id);
+    List<Task> getHistory();
+    void updateTask (Task task);
+
 }

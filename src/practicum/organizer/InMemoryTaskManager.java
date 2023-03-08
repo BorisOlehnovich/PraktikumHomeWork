@@ -2,6 +2,7 @@ package practicum.organizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager  implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
@@ -83,14 +84,17 @@ public class InMemoryTaskManager  implements TaskManager {
         switch (type) {
             case TASK:
                 tasks.put(task.getId(), task);
+                historyManager.updateTask(task);
                 break;
 
             case EPIC:
                 epics.put(task.getId(), (Epic) task);
+                historyManager.updateTask(task);
                 break;
 
             case SUB_TASK:
                 subTasks.put(task.getId(), (SubTask) task);
+                historyManager.updateTask(task);
 
                 // Если обновлен SubTask нужно обновить Эпик которому он соответствует.
                 int epicId = ((SubTask) task).getEpicId();
@@ -105,6 +109,7 @@ public class InMemoryTaskManager  implements TaskManager {
                 Epic oldEpic = (Epic) getTaskFromId(epicId);
                 Epic newEpic =  new Epic(epicId, oldEpic.getTitle(), newSubTasksListForEpic);
                 updateTask(newEpic, TypeOfTask.EPIC);
+                historyManager.updateTask(newEpic);
                 break;
 
             default:
@@ -117,14 +122,17 @@ public class InMemoryTaskManager  implements TaskManager {
     public void deleteTaskFromId (int id) {
         if (tasks.containsKey(id)) {
             tasks.remove(id);
+            historyManager.remove(id);
         } else if (epics.containsKey(id)) {
             // Удаляем Эпик следовательно удаляем все подзадачи которые в него входят
             ArrayList<SubTask> subTasksToRemove = new ArrayList<>();
             subTasksToRemove = epics.get(id).getDescriptionEpic();
             for (SubTask subTask : subTasksToRemove) {
                 subTasks.remove(subTask.getId());
+                historyManager.remove(subTask.getId());
             }
             epics.remove(id);
+            historyManager.remove(id);
         } else if (subTasks.containsKey(id)) {
             //Удаляем подзадачу из общего списка и из эпика
             int epicId = subTasks.get(id).getEpicId();
@@ -137,6 +145,9 @@ public class InMemoryTaskManager  implements TaskManager {
             }
             String title = epics.get(epicId).getTitle();
             Epic newEpic = new Epic(epicId, title, newSubtask);
+            epics.put(epicId, newEpic);
+            historyManager.remove(id);
+            historyManager.updateTask(newEpic);
         } else {
             System.out.println("Задачи с таким идентификатором не существует");
         }
@@ -149,7 +160,7 @@ public class InMemoryTaskManager  implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> history() {
+    public List<Task> history() {
         return historyManager.getHistory();
     }
 }

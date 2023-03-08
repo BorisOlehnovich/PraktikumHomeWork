@@ -1,6 +1,7 @@
 package practicum.organizer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -81,12 +82,14 @@ public class Main {
         manager.getTaskFromId(1);
         manager.getTaskFromId(3);
         manager.getTaskFromId(5);
-        manager.getTaskFromId(1);
-        manager.getTaskFromId(3);
+        manager.getTaskFromId(2);
         manager.getTaskFromId(5);
+        manager.getTaskFromId(3);
+
+        manager.deleteTaskFromId(3);
 
         System.out.println("Список важных дел:");
-        ArrayList<Task> tasks = manager.history();
+        List<Task> tasks = manager.history();
         for (Task task: tasks) {
             System.out.println(task.toString());
         }
