@@ -7,5 +7,6 @@ public interface HistoryManager {
     void remove(int id);
     List<Task> getHistory();
     void updateTask (Task task);
+    String historyToString();
 
 }

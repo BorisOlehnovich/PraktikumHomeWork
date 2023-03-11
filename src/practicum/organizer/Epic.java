@@ -56,4 +56,30 @@ public class Epic extends Task {
         }
         return toStr.toString();
     }
+
+    public String descriptionToString() {
+        StringBuilder builder = new StringBuilder();
+        for (SubTask subTask : descriptionEpic) {
+            builder.append(",").append(subTask.TaskToString());
+        }
+        return builder.toString();
+    }
+
+    @Override
+    public String TaskToString() {
+        String str = TypeOfTask.EPIC + "," + getId() + "," + getTitle() + "," + getStatus()  + descriptionToString();
+        return str;
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+

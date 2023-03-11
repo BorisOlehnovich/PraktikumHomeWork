@@ -7,18 +7,23 @@ public class Main {
     public static void main(String[] args) {
         TaskManager manager = Managers.getDefault();
 
-        ArrayList<String> description1 = new ArrayList<>();
+
+   /*     ArrayList<String> description1 = new ArrayList<>();
         description1.add("Разморозить курицу");
         description1.add("Почистить картошку");
         description1.add("Запечь в духовке 40 мин 200 градусов");
-        manager.addNewTask(TypeOfTask.TASK, new Task(manager.generateId(), "Приготовить ужин",
-               description1 , Status.NEW));
+        Task task1 = new Task(manager.generateId(), "Приготовить ужин",
+                description1 , Status.NEW);
+        manager.addNewTask(TypeOfTask.TASK, task1 );
+
 
         ArrayList<String> description2 = new ArrayList<>();
         description2.add("Сравнить цены на озон и детском мире");
         description2.add("Скинуть ссылку жене");
-        manager.addNewTask(TypeOfTask.TASK, new Task(manager.generateId(), "Купить подгузники",
-                description2 , Status.NEW));
+        Task task2 = new Task(manager.generateId(), "Купить подгузники",
+                description2 , Status.NEW);
+        manager.addNewTask(TypeOfTask.TASK, task2 );
+
 
         String firstEpicTitle = "Отремонтировать машину";
         int firstEpicId = manager.generateId();
@@ -63,15 +68,6 @@ public class Main {
         manager.addNewTask(TypeOfTask.EPIC,
                 new Epic(secondEpicId, secondEpicTitle, secondEpicSubTasks));
 
-        //manager.deleteAllTasks();
-        //System.out.println(manager.getTaskFromId(3).toString());
-        /*
-        SubTask newSubtask = new SubTask(5, firstEpicSubTaskTitle2,
-                firstEpicSubtaskDescription2, Status.NEW, firstEpicId);
-        manager.updateTask(newSubtask, TypeOfTask.SUB_TASK);
-        */
-
-        //manager.deleteTaskFromId(3);
 
         manager.getTaskFromId(1);
         manager.getTaskFromId(3);
@@ -85,8 +81,12 @@ public class Main {
         manager.getTaskFromId(2);
         manager.getTaskFromId(5);
         manager.getTaskFromId(3);
+*/
 
-        manager.deleteTaskFromId(3);
+
+
+
+        ((FileBackedTaskManager)manager).load();
 
         System.out.println("Список важных дел:");
         List<Task> tasks = manager.history();
@@ -98,4 +98,49 @@ public class Main {
 
 
     }
+    /*
+
+    public static void createFile (Path path) {
+        try {
+            Files.createFile(path);
+        } catch (IOException ioException) {
+            System.out.println("Файл уже существует");
+        }
+    }
+
+    public static void testSave (Task task) {
+        Path path = Paths.get("C:\\Users\\olehn\\dev\\PraktikumHomeWork\\src\\practicum\\organizer\\saveTasks.txt");
+        if (!Files.exists(path)) {
+            createFile(path);
+        }
+        try (FileWriter writer = new FileWriter(path.toString());
+             BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
+            bufferedWriter.write(task.TaskToString());
+
+        } catch (FileNotFoundException fnf) {
+            System.out.println("Файл не найден");
+
+        } catch (IOException ioException) {
+            System.out.println("IOException");
+        }
+    }
+
+    public static Task testLoad (){
+
+        Path path = Paths.get("C:\\Users\\olehn\\dev\\PraktikumHomeWork\\src\\practicum\\organizer\\saveTasks.txt");
+        try (FileReader reader = new FileReader(path.toString());
+        BufferedReader bufferedReader = new BufferedReader(reader)){
+            String line = bufferedReader.readLine();
+            String[] taskFields = line.split(",");
+            Task task = Task.TaskFromString(taskFields);
+            return task;
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден");
+        } catch (IOException e) {
+            System.out.println("IOException");
+        }
+        return null;
+    }
+
+     */
 }

@@ -75,4 +75,17 @@ public class Task {
                 ", status= " + status +
                 '}';
     }
+
+    public String descriptionToString () {
+        StringBuilder builder = new StringBuilder();
+        for (String str : description) {
+            builder.append(",").append(str);
+        }
+        return builder.toString();
+    }
+
+    public String TaskToString() {
+        return TypeOfTask.TASK + "," + id + "," + title + "," + status + descriptionToString();
+    }
+
 }

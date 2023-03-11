@@ -29,4 +29,14 @@ public class SubTask extends Task {
                 " Status= " + getStatus() +
                 '}';
     }
+
+    @Override
+    public String TaskToString() {
+        String str = TypeOfTask.SUB_TASK + "," + getId() + "," + getEpicId()  + ","
+                + getTitle() + "," + getStatus() + descriptionToString();
+        return TypeOfTask.SUB_TASK + "," + getId() + "," + getEpicId()  + ","
+                + getTitle() + "," + getStatus() + descriptionToString();
+    }
+
+
 }
