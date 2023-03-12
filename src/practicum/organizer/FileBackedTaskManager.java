@@ -12,7 +12,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager{
     Path path;
 
     public FileBackedTaskManager() {
-        path = Paths.get("C:\\Users\\olehn\\dev\\PraktikumHomeWork\\src\\practicum\\organizer\\saveTasks.txt");
+        path = Paths.get("src/practicum/organizer/saveTasks.txt");
     }
 
     public FileBackedTaskManager(Path path) {
