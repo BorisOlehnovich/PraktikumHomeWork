@@ -27,21 +27,25 @@ public class Epic extends Task {
         boolean isNew = true;
         boolean isDone = true;
 
-        for (SubTask subTask : descriptionEpic) {
-            if (!subTask.getStatus().equals(Status.NEW)){
-                isNew = false;
+        if (!descriptionEpic.isEmpty()) {
+            for (SubTask subTask : descriptionEpic) {
+                if (!subTask.getStatus().equals(Status.NEW)) {
+                    isNew = false;
+                }
+                if (!subTask.getStatus().equals(Status.DONE)) {
+                    isDone = false;
+                }
             }
-            if (!subTask.getStatus().equals(Status.DONE)) {
-                isDone = false;
-            }
-        }
 
-        if (isNew) {
-            this.setStatus(Status.NEW);
-        } else if (isDone) {
-            this.setStatus(Status.DONE);
+            if (isNew) {
+                this.setStatus(Status.NEW);
+            } else if (isDone) {
+                this.setStatus(Status.DONE);
+            } else {
+                this.setStatus(Status.IN_PROGRESS);
+            }
         } else {
-            this.setStatus(Status.IN_PROGRESS);
+            this.setStatus(Status.NEW);
         }
     }
 

@@ -27,6 +27,11 @@ public class InMemoryTaskManager  implements TaskManager {
             case EPIC:
                 Epic epic = (Epic) obj;
                 epics.put(epic.getId(),epic);
+                if (!epic.getDescriptionEpic().isEmpty()) {
+                    for (SubTask subTask: epic.getDescriptionEpic()){
+                        addNewTask(TypeOfTask.SUB_TASK, subTask);
+                    }
+                }
                 break;
             case SUB_TASK:
                 SubTask subTask = (SubTask) obj;
@@ -67,7 +72,7 @@ public class InMemoryTaskManager  implements TaskManager {
         } else if (epics.containsKey(id)) {
             Epic epic = epics.get(id);
             historyManager.addTask(epic);
-            return epic;
+                return epic;
         } else if (subTasks.containsKey(id)) {
             SubTask subTask = subTasks.get(id);
             historyManager.addTask(subTask);
@@ -167,4 +172,6 @@ public class InMemoryTaskManager  implements TaskManager {
     public HistoryManager getHistoryManager() {
         return historyManager;
     }
+
+
 }

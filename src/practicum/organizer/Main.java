@@ -1,6 +1,5 @@
 package practicum.organizer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -8,7 +7,7 @@ public class Main {
         TaskManager manager = Managers.getDefault();
 
 
-   /*     ArrayList<String> description1 = new ArrayList<>();
+     /*     ArrayList<String> description1 = new ArrayList<>();
         description1.add("Разморозить курицу");
         description1.add("Почистить картошку");
         description1.add("Запечь в духовке 40 мин 200 градусов");
@@ -98,49 +97,5 @@ public class Main {
 
 
     }
-    /*
 
-    public static void createFile (Path path) {
-        try {
-            Files.createFile(path);
-        } catch (IOException ioException) {
-            System.out.println("Файл уже существует");
-        }
-    }
-
-    public static void testSave (Task task) {
-        Path path = Paths.get("C:\\Users\\olehn\\dev\\PraktikumHomeWork\\src\\practicum\\organizer\\saveTasks.txt");
-        if (!Files.exists(path)) {
-            createFile(path);
-        }
-        try (FileWriter writer = new FileWriter(path.toString());
-             BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
-            bufferedWriter.write(task.TaskToString());
-
-        } catch (FileNotFoundException fnf) {
-            System.out.println("Файл не найден");
-
-        } catch (IOException ioException) {
-            System.out.println("IOException");
-        }
-    }
-
-    public static Task testLoad (){
-
-        Path path = Paths.get("C:\\Users\\olehn\\dev\\PraktikumHomeWork\\src\\practicum\\organizer\\saveTasks.txt");
-        try (FileReader reader = new FileReader(path.toString());
-        BufferedReader bufferedReader = new BufferedReader(reader)){
-            String line = bufferedReader.readLine();
-            String[] taskFields = line.split(",");
-            Task task = Task.TaskFromString(taskFields);
-            return task;
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден");
-        } catch (IOException e) {
-            System.out.println("IOException");
-        }
-        return null;
-    }
-
-     */
 }
