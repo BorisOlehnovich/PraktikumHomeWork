@@ -3,6 +3,8 @@ package practicum.organizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -262,6 +264,8 @@ class MainTest {
         firstEpicSubtaskDescription1.add("Воздушный фильтр");
         SubTask subTask1ForFirstEpic = new SubTask(manager.generateId(), firstEpicSubTaskTitle1,
                 firstEpicSubtaskDescription1, Status.NEW, firstEpicId);
+        subTask1ForFirstEpic.setStartTime(LocalDateTime.now());
+        subTask1ForFirstEpic.setDuration(Duration.ofMinutes(5));
         firstEpicSubTask.add(subTask1ForFirstEpic);
 
         String firstEpicSubTaskTitle2 = "Выбрать автосервис";
@@ -270,6 +274,8 @@ class MainTest {
         firstEpicSubtaskDescription2.add("Оплатить ремонт");
         SubTask subTask2ForFirstEpic = new SubTask(manager.generateId(), firstEpicSubTaskTitle2,
                 firstEpicSubtaskDescription2, Status.NEW, firstEpicId);
+        subTask2ForFirstEpic.setStartTime(LocalDateTime.now().plus(Duration.ofHours(1)));
+        subTask2ForFirstEpic.setDuration(Duration.ofMinutes(15));
         firstEpicSubTask.add(subTask2ForFirstEpic);
 
         Epic epic = new Epic(firstEpicId, firstEpicTitle, firstEpicSubTask);
@@ -278,6 +284,8 @@ class MainTest {
         ArrayList<String> description = new ArrayList<>();
         description.add("Описание задачи");
         Task task = new Task(manager.generateId(), "Задача", description, Status.NEW);
+        task.setStartTime(LocalDateTime.now().plus(Duration.ofHours(3)));
+        task.setDuration(Duration.ofMinutes(15));
         manager.addNewTask(TypeOfTask.TASK, task);
 
         manager.getTaskFromId(1);
@@ -290,6 +298,8 @@ class MainTest {
         ((FileBackedTaskManager) manager1).load();
 
         List<Task> loadedTasks = manager1.getAllTasks();
+
+        System.out.println();
 
         assertEquals(savedTask.size(), loadedTasks.size(), "Размер массива задач не совпадает");
 

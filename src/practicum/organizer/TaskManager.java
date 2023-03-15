@@ -2,6 +2,7 @@ package practicum.organizer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -34,5 +35,7 @@ public interface TaskManager {
 
     // получить историю просмотра задач
     List<Task> history();
+
+    Set<Task> getTasksThreeSet();
 
 }

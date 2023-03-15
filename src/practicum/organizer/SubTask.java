@@ -27,15 +27,15 @@ public class SubTask extends Task {
                 " title= " + getTitle() +
                 " Description= " + getDescription() +
                 " Status= " + getStatus() +
+                " Start time= " + getStartTime() +
+                " Duration= " + getDuration() +
                 '}';
     }
 
     @Override
     public String TaskToString() {
-        String str = TypeOfTask.SUB_TASK + "," + getId() + "," + getEpicId()  + ","
-                + getTitle() + "," + getStatus() + descriptionToString();
         return TypeOfTask.SUB_TASK + "," + getId() + "," + getEpicId()  + ","
-                + getTitle() + "," + getStatus() + descriptionToString();
+                + getTitle() + "," + getStatus() + "," + getStartTime() + "," + getDuration() + descriptionToString();
     }
 
 

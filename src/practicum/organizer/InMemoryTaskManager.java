@@ -1,14 +1,14 @@
 package practicum.organizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class InMemoryTaskManager  implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap <Integer, Epic> epics = new HashMap<>();
     private HashMap <Integer, SubTask> subTasks = new HashMap<>();
     private HistoryManager historyManager = Managers.getDefaultHistory();
+
+    private TreeSet<Task> tasksTreeSet = new TreeSet<>();
 
     private int id = 0;
 
@@ -22,20 +22,35 @@ public class InMemoryTaskManager  implements TaskManager {
         switch (type) {
             case TASK:
                 Task task = (Task) obj;
+                if (!isTimeFree(task)){
+                    System.out.println("Это время уже занято");
+                    break;
+                }
                 tasks.put(task.getId(), task);
+                tasksTreeSet.add(task);
                 break;
             case EPIC:
                 Epic epic = (Epic) obj;
+                if (!isTimeFree(epic)) {
+                    System.out.println("Это время уже занято");
+                    break;
+                }
                 epics.put(epic.getId(),epic);
                 if (!epic.getDescriptionEpic().isEmpty()) {
                     for (SubTask subTask: epic.getDescriptionEpic()){
                         addNewTask(TypeOfTask.SUB_TASK, subTask);
                     }
                 }
+                tasksTreeSet.add(epic);
                 break;
             case SUB_TASK:
                 SubTask subTask = (SubTask) obj;
+                if (!isTimeFree(subTask)) {
+                    System.out.println("Это время уже занято");
+                    break;
+                }
                 subTasks.put(subTask.getId(), subTask);
+                tasksTreeSet.add(subTask);
                 break;
             default:
                 System.out.println("Неправильно указан тип задачи");
@@ -86,6 +101,10 @@ public class InMemoryTaskManager  implements TaskManager {
     //Обновление Задачи по ID
     @Override
     public void updateTask (Task task, TypeOfTask type) {
+        if (!isTimeFree(task)) {
+            System.out.println("Это время уже занято");
+            return;
+        }
         switch (type) {
             case TASK:
                 tasks.put(task.getId(), task);
@@ -173,5 +192,22 @@ public class InMemoryTaskManager  implements TaskManager {
         return historyManager;
     }
 
+    @Override
+    public Set<Task> getTasksThreeSet() {
+        return tasksTreeSet;
+    }
 
+    private boolean isTimeFree (Task newTask) {
+        for (Task task: tasksTreeSet) {
+            if ((newTask.getStartTime().isAfter(task.getStartTime()) &&
+                    newTask.getStartTime().isBefore(task.getStartTime().plus(task.getDuration()))) ||
+                    (newTask.getStartTime().plus(newTask.getDuration()).isAfter(task.getStartTime()) &&
+                            newTask.getStartTime().plus(newTask.getDuration()).
+                                    isBefore(task.getStartTime().plus(task.getDuration())))){
+                return false;
+
+            }
+        }
+        return true;
+    }
 }

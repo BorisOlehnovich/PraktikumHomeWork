@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -117,11 +119,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager{
         int id = Integer.parseInt(allFields[1]);
         String title = allFields[2];
         Status status = Status.valueOf(allFields[3]);
+        LocalDateTime startTime = LocalDateTime.parse(allFields[4]);
+        Duration duration = Duration.parse(allFields[5]);
         ArrayList<String> description = new ArrayList<>();
-        for (int i = 4; i < allFields.length; i++) {
+        for (int i = 6; i < allFields.length; i++) {
             description.add(allFields[i]);
         }
-        return new Task(id, title, description, status);
+        Task task = new Task(id, title, description, status);
+        task.setStartTime(startTime);
+        task.setDuration(duration);
+        return task;
 
     }
 
@@ -130,11 +137,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager{
         int epicId = Integer.parseInt(allFields[2]);
         String title = allFields[3];
         Status status = Status.valueOf(allFields[4]);
+        LocalDateTime startTime = LocalDateTime.parse(allFields[5]);
+        Duration duration = Duration.parse(allFields[6]);
         ArrayList<String> description = new ArrayList<>();
-        for (int i = 5; i < allFields.length; i++) {
+        for (int i = 7; i < allFields.length; i++) {
             description.add(allFields[i]);
         }
-        return new SubTask(id, title, description, status, epicId);
+        SubTask subTask = new SubTask(id, title, description, status, epicId);
+        subTask.setStartTime(startTime);
+        subTask.setDuration(duration);
+        return subTask;
     }
 
 

@@ -1,5 +1,7 @@
 package practicum.organizer;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -11,6 +13,7 @@ public class Epic extends Task {
         this.descriptionEpic = descriptionEpic;
 
         updateEpicStatus();
+        setStartTimeAndDuration();
 
     }
 
@@ -54,7 +57,9 @@ public class Epic extends Task {
         StringBuilder toStr = new StringBuilder("Epic{ " +
                 " ID= " + getId() +
                 " Title= " + getTitle() +
-                " Status= " + getStatus());
+                " Status= " + getStatus() +
+                " Start time= " + getStartTime() +
+                " Duration= " + getDuration());
         for (SubTask subTask : descriptionEpic) {
             toStr.append("\n\t").append(subTask.toString());
         }
@@ -71,8 +76,31 @@ public class Epic extends Task {
 
     @Override
     public String TaskToString() {
-        String str = TypeOfTask.EPIC + "," + getId() + "," + getTitle() + "," + getStatus()  + descriptionToString();
+        String str = TypeOfTask.EPIC + "," + getId() + "," + getTitle() +
+                "," + getStatus() + "," + getStartTime() + "," + getDuration()  + descriptionToString();
         return str;
+    }
+
+    private void setStartTimeAndDuration() {
+        if (getDescriptionEpic().isEmpty()){
+            System.out.println("Список подзадач пуст, расчитать время начала выполнения Эпика не получится");
+            return;
+        }
+        LocalDateTime first = getDescriptionEpic().get(0).getStartTime();
+        LocalDateTime last = getDescriptionEpic().get(0).getStartTime();
+        Duration duration = getDescriptionEpic().get(0).getDuration();
+
+        for (SubTask subTask : getDescriptionEpic()){
+            if (first.isAfter(subTask.getStartTime())){
+                first = subTask.getStartTime();
+            }
+            if (last.isBefore(subTask.getStartTime())){
+                last = subTask.getStartTime();
+                duration = subTask.getDuration();
+            }
+        }
+        this.setStartTime(first);
+        this.setDuration(Duration.between(first, last.plus(duration)));
     }
 
 

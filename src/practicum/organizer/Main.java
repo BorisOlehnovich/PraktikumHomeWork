@@ -1,6 +1,7 @@
 package practicum.organizer;
 
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -88,7 +89,7 @@ public class Main {
         ((FileBackedTaskManager)manager).load();
 
         System.out.println("Список важных дел:");
-        List<Task> tasks = manager.history();
+        Set<Task> tasks = manager.getTasksThreeSet();
         for (Task task: tasks) {
             System.out.println(task.toString());
         }

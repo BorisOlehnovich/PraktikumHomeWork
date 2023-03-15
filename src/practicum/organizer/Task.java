@@ -1,13 +1,19 @@
 package practicum.organizer;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable<Task> {
     private int id;
     private String title;
     private ArrayList<String> description;
     private Status status;
+
+    private LocalDateTime startTime;
+
+    private Duration duration;
 
     public Task(int id, String title, ArrayList<String> description, Status status) {
         this.id = id;
@@ -19,6 +25,22 @@ public class Task {
     public Task(int id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 
     public int getId() {
@@ -58,21 +80,23 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && status == task.status;
+        return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && status == task.status && Objects.equals(startTime, task.startTime) && Objects.equals(duration, task.duration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, status);
+        return Objects.hash(id, title, description, status, startTime, duration);
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                " id= " + id +
-                " , title=' " + title + '\'' +
-                ", description= " + description +
-                ", status= " + status +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description=" + description +
+                ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
                 '}';
     }
 
@@ -85,7 +109,14 @@ public class Task {
     }
 
     public String TaskToString() {
-        return TypeOfTask.TASK + "," + id + "," + title + "," + status + descriptionToString();
+        return TypeOfTask.TASK + "," + id + "," + title + "," +
+                status + "," + startTime + "," + duration + descriptionToString();
     }
 
+    @Override
+    public int compareTo(Task o) {
+        if (getStartTime().isEqual(o.getStartTime()))
+            return 0;
+        return getStartTime().isBefore(o.getStartTime())? -1 : 1;
+    }
 }
