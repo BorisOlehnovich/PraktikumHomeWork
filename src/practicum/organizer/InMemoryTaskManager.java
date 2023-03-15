@@ -50,7 +50,6 @@ public class InMemoryTaskManager  implements TaskManager {
                     break;
                 }
                 subTasks.put(subTask.getId(), subTask);
-                tasksTreeSet.add(subTask);
                 break;
             default:
                 System.out.println("Неправильно указан тип задачи");
